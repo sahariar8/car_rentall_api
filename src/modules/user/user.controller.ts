@@ -2,22 +2,27 @@ import { Request, Response } from "express";
 import { userService } from "./user.service";
 
 
-const getUser = async (req:Request, res:Response) => {
-    const {id} = req.params;
+const getUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(req.params);
     try {
         const result = await userService.getUserById(Number(id));
         res.status(200).json({
             status: "success",
             message: "User profile",
-            data: result
+            data: result.rows[0]
         });
-    } catch (err:any) {
-        
+    } catch (err: any) {
+        res.status(500).json({
+            status: "error",
+            message: "Failed to fetch user",
+            error: err.message
+        });
     }
 };
 
-const createUser = async (req:Request, res:Response) => {
-    const {name, email, password, phone, role} = req.body;
+const createUser = async (req: Request, res: Response) => {
+    const { name, email, password, phone, role } = req.body;
     console.log(req.body);
     try {
         const result = await userService.createUser(name, email, password, phone, role);
@@ -26,7 +31,7 @@ const createUser = async (req:Request, res:Response) => {
             message: "User created",
             data: result.rows[0]
         });
-    } catch (err:any) {
+    } catch (err: any) {
         res.status(500).json({
             status: "error",
             message: "Failed to create user",
@@ -35,8 +40,8 @@ const createUser = async (req:Request, res:Response) => {
     }
 };
 
-const deleteUser = async (req:Request, res:Response) => {
-    const {id} = req.params;
+const deleteUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
     // Logic to delete user
     try {
         const result = await userService.deleteUser(Number(id));
@@ -45,7 +50,7 @@ const deleteUser = async (req:Request, res:Response) => {
             message: "User deleted",
             data: result.rows[0]
         });
-    } catch (error:any) {
+    } catch (error: any) {
         res.status(500).json({
             status: "error",
             message: "Failed to delete user",
@@ -56,5 +61,5 @@ const deleteUser = async (req:Request, res:Response) => {
 
 
 export const userController = {
-    getUser,createUser,deleteUser
+    getUser, createUser, deleteUser
 };

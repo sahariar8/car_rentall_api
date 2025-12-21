@@ -4,6 +4,7 @@ import config from "./config";
 import initDB from "./config/db";
 import { vehicleRoutes } from "./modules/vehicle/vehicle.routes";
 import { userRoutes } from "./modules/user/user.routes";
+import { authRoutes } from "./modules/auth/auth.routes";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ initDB();
 
 app.use("/api/v1/vehicles",vehicleRoutes);
 app.use("/api/v1/users",userRoutes);
+app.use("/api/v1/auth",authRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

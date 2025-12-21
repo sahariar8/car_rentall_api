@@ -2,22 +2,22 @@ import { Pool } from "pg";
 import config from ".";
 
 export const pool = new Pool({
-  connectionString: config.connectionString,
+      connectionString: config.connectionString,
 });
 
 const initDB = async () => {
-  await pool.query(`CREATE TABLE IF NOT EXISTS users (
+      await pool.query(`CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE CHECK (email = lower(email)),
-        password VARCHAR(100) NOT NULL CHECK (length(password) >= 6),
+        password TEXT NOT NULL CHECK (length(password) >= 6),
         phone VARCHAR(15) NOT NULL,
         role VARCHAR(50) NOT NULL CHECK (role IN ('customer', 'admin')),
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
         )`);
 
-  await pool.query(`CREATE TABLE IF NOT EXISTS vehicles (
+      await pool.query(`CREATE TABLE IF NOT EXISTS vehicles (
         id SERIAL PRIMARY KEY,
         vehicle_name VARCHAR(100) NOT NULL,
         type VARCHAR(50) NOT NULL CHECK (type IN ('car', 'bike', 'van', 'SUV')),
@@ -26,7 +26,7 @@ const initDB = async () => {
         availability_status VARCHAR(50) NOT NULL CHECK (availability_status IN ('available', 'booked'))
         )`);
 
-  await pool.query(`CREATE TABLE IF NOT EXISTS bookings (
+      await pool.query(`CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
         customer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,

@@ -3,7 +3,7 @@ import { pool } from "../../config/db";
 
 const getUserById = async (id: number) => {
     // Simulate fetching user from database
-    const users = `SELECT * FROM users WHERE id = ${id}`;
+    const users = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
     return users;
 }
 
