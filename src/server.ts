@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import config from "./config";
 import initDB from "./config/db";
 import { vehicleRoutes } from "./modules/vehicle/vehicle.routes";
+import { userRoutes } from "./modules/user/user.routes";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 initDB();
 
 app.use("/api/v1/vehicles",vehicleRoutes);
+app.use("/api/v1/users",userRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
