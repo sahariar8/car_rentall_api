@@ -53,9 +53,9 @@ const getVehicles = async (req: Request, res: Response) => {
 };
 
 const singleVehicle = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { vehicleId } = req.params;
   try {
-    const vehicle = await vehicleService.singleVehicle(Number(id));
+    const vehicle = await vehicleService.singleVehicle(Number(vehicleId));
     res.status(200).json({
       status: "success",
       vehicle: vehicle.rows[0],
@@ -70,7 +70,7 @@ const singleVehicle = async (req: Request, res: Response) => {
 };
 
 const updateVehicle = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { vehicleId } = req.params;
   const {
     vehicle_name,
     type,
@@ -81,7 +81,7 @@ const updateVehicle = async (req: Request, res: Response) => {
 
   try {
     const result = await vehicleService.updateVehicle(
-      Number(id),
+      Number(vehicleId),
       vehicle_name,
       type,
       registration_number,
@@ -103,9 +103,9 @@ const updateVehicle = async (req: Request, res: Response) => {
 };
 
 const deleteVehicle = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { vehicleId } = req.params;
   try {
-    const result = await vehicleService.deleteVehicle(Number(id));
+    const result = await vehicleService.deleteVehicle(Number(vehicleId));
     res.status(200).json({
       status: "success",
       message: "Vehicle deleted successfully",

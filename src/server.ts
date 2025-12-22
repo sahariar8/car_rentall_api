@@ -22,6 +22,14 @@ app.use("/api/v1/vehicles",vehicleRoutes);
 app.use("/api/v1/users",userRoutes);
 app.use("/api/v1/auth",authRoutes);
 
+
+app.use((req, res) => {
+  res.status(404).json({
+    status: "error",
+    message: "Route Not Found",
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
