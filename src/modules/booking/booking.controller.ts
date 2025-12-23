@@ -46,6 +46,7 @@ const getBookings = async (req: Request, res: Response) => {
 const updateBookings = async (req: Request, res: Response) => {
   const { bookingId } = req.params;
   const user = req.user!;
+  console.log(user);
   const { status } = req.body;
   
 
@@ -78,7 +79,8 @@ const updateBookings = async (req: Request, res: Response) => {
       }
 
       booking.status = "cancelled";
-      await bookingService.updateBookingStatus(Number(bookingId), "cancelled");
+      await bookingService.updateBookingStatus(Number(bookingId), status);
+      await bookingService.updateVehicleStatus(booking.vehicle_id, "available");
 
       return res
         .status(200)
@@ -93,7 +95,7 @@ const updateBookings = async (req: Request, res: Response) => {
           .json({ status: "error", message: "Booking is already returned" });
       }
 
-      await bookingService.updateBookingStatus(Number(bookingId), "returned");
+      await bookingService.updateBookingStatus(Number(bookingId), status);
       await bookingService.updateVehicleStatus(booking.vehicle_id, "available");
 
       return res
@@ -112,6 +114,8 @@ const updateBookings = async (req: Request, res: Response) => {
       });
   }
 };
+
+
 export const bookingController = {
   createBooking,
   getBookings,

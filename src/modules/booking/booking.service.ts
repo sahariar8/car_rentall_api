@@ -112,7 +112,7 @@ export const updateVehicleStatus = async (
   status: string
 ) => {
   return pool.query(
-    "UPDATE vehicles SET status = $1 WHERE id = $2 RETURNING *",
+    "UPDATE vehicles SET availability_status = $1 WHERE id = $2 RETURNING *",
     [status, vehicleId]
   );
 };

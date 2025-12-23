@@ -33,6 +33,7 @@ const signIn = async (email: string, password: string) => {
     throw new Error("User not found");
   }
   const user = userResult.rows[0];
+  console.log(user);
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new Error("Invalid password");
