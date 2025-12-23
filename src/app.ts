@@ -17,7 +17,9 @@ app.use(express.json());
 
 //call DB initialization
 initDB();
-
+app.get("/", (req, res) => {
+  res.send("Welcome to Car Rental API");
+});
 app.use("/api/v1/vehicles",vehicleRoutes);
 app.use("/api/v1/users",userRoutes);
 app.use("/api/v1/auth",authRoutes);
